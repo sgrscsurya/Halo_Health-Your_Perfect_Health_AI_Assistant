@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <title>HALO HEALTH - Nutrition & Diet Plans</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      animation: fadeInDown 1.5s ease-in-out;
+    }
+
+    header p {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      animation: fadeInUp 1.5s ease-in-out;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: center;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 2rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #1abc9c;
+      transform: translateY(-3px);
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 6rem 0;
+    }
+
+    .hero h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      animation: fadeIn 2s ease-in-out;
+      color: #2c3e50;
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      margin-bottom: 2.5rem;
+      animation: fadeIn 2.5s ease-in-out;
+      color: #555;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1.5rem 3rem;
+      background: linear-gradient(135deg, #1abc9c, #16a085);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(26, 188, 156, 0.4);
+    }
+
+    /* Form Section */
+    .form-section {
+      text-align: center;
+      padding: 4rem 0;
+    }
+
+    .form-section h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+    }
+
+    .form-section input {
+      width: 100%;
+      max-width: 400px;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 2px solid #1abc9c;
+      border-radius: 50px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-section input:focus {
+      border-color: #16a085;
+      box-shadow: 0 0 10px rgba(26, 188, 156, 0.4);
+    }
+
+    .form-section button {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #1abc9c, #16a085);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-section button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(26, 188, 156, 0.4);
+    }
+
+    /* Plans Section */
+    .plans-section {
+      text-align: center;
+      padding: 4rem 0;
+    }
+
+    .plans-section h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .plan-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .plan-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+
+    .plan-card p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: white;
+      text-align: center;
+      padding: 4rem 0;
+      margin-top: 6rem;
+    }
+
+    footer p {
+      font-size: 1.2rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>HALO HEALTH</h1>
+    <p>Your Journey to Better Nutrition and Health Starts Here</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#plans">Diet Plans</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h2>Transform Your Life with Personalized Nutrition Plans</h2>
+      <p>Discover the perfect diet plan tailored to your needs and achieve your health goals with HALO HEALTH.</p>
+      <a href="#plans" class="cta-button">Get Started</a>
+    </section>
+
+    <!-- Form Section -->
+    <section id="plans" class="form-section">
+      <h2>Tell Us About Yourself</h2>
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <button onclick="generatePlans()">Generate Plans</button>
+    </section>
+
+    <!-- Plans Section -->
+    <section class="plans-section">
+      <h2>Your Personalized Nutrition & Diet Plans</h2>
+      <div class="plans-grid" id="plans-grid"></div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 HALO HEALTH. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript for Interactive Effects -->
+  <script>
+    // Sample data for nutrition and diet plans
+    const nutritionPlans = [
+      "Low-Carb Diet for Diabetes Management",
+      "High-Protein Diet for Muscle Building",
+      "Mediterranean Diet for Heart Health",
+      "Keto Diet for Weight Loss",
+      "Low-FODMAP Diet for IBS Relief",
+      "DASH Diet for Hypertension Control",
+      "Vegetarian Diet for Cholesterol Reduction",
+      "Gluten-Free Diet for Celiac Disease",
+      "Anti-Inflammatory Diet for Arthritis",
+      "Paleo Diet for Autoimmune Conditions"
+    ];
+
+    const dietPlans = [
+      "Breakfast: Oatmeal with Berries | Lunch: Grilled Chicken Salad | Dinner: Salmon with Quinoa",
+      "Breakfast: Greek Yogurt with Nuts | Lunch: Turkey Wrap | Dinner: Stir-Fried Vegetables with Tofu",
+      "Breakfast: Avocado Toast | Lunch: Lentil Soup | Dinner: Grilled Fish with Steamed Broccoli",
+      "Breakfast: Scrambled Eggs with Spinach | Lunch: Caesar Salad | Dinner: Beef Steak with Asparagus",
+      "Breakfast: Smoothie with Almond Milk | Lunch: Quinoa Salad | Dinner: Grilled Chicken with Zucchini",
+      "Breakfast: Whole Grain Toast with Peanut Butter | Lunch: Veggie Burger | Dinner: Baked Cod with Sweet Potato",
+      "Breakfast: Chia Pudding | Lunch: Chickpea Salad | Dinner: Stuffed Bell Peppers",
+      "Breakfast: Gluten-Free Pancakes | Lunch: Rice Noodles with Veggies | Dinner: Grilled Shrimp with Rice",
+      "Breakfast: Smoothie Bowl | Lunch: Quinoa and Black Bean Salad | Dinner: Roasted Chicken with Veggies",
+      "Breakfast: Scrambled Eggs with Avocado | Lunch: Chicken Salad | Dinner: Pork Chops with Cauliflower Rice"
+    ];
+
+    // Function to generate random plans
+    function generatePlans() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+
+      if (!name || !email) {
+        alert("Please fill out all fields!");
+        return;
+      }
+
+      const plansGrid = document.getElementById('plans-grid');
+      plansGrid.innerHTML = ""; // Clear previous content
+
+      for (let i = 0; i < 9; i++) {
+        const randomNutrition = nutritionPlans[Math.floor(Math.random() * nutritionPlans.length)];
+        const randomDiet = dietPlans[Math.floor(Math.random() * dietPlans.length)];
+
+        const planCard = document.createElement('div');
+        planCard.classList.add('plan-card');
+        planCard.innerHTML = `
+          <h3>${randomNutrition}</h3>
+          <p><strong>Diet Plan:</strong> ${randomDiet}</p>
+        `;
+        plansGrid.appendChild(planCard);
+      }
+
+      // Scroll to plans section
+      document.querySelector('.plans-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        document.querySelector(targetId).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointments and Consultations</title>
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url('appointmentsbg.jpg') no-repeat center center;
+      background-size: cover;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #ff6f61;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #ff3b2f;
+    }
+
+    .appointments-list {
+      margin-top: 20px;
+    }
+
+    .appointment-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease;
+    }
+
+    .appointment-card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .appointment-card p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .appointment-card button {
+      background: #ff6f61;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-right: 5px;
+    }
+
+    .appointment-card button.edit {
+      background: #4caf50;
+    }
+
+    .appointment-card button.edit:hover {
+      background: #45a049;
+    }
+
+    .appointment-card button.delete {
+      background: #ff4d4d;
+    }
+
+    .appointment-card button.delete:hover {
+      background: #cc0000;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Appointments and Consultations</h1>
+
+    <!-- Add Appointment Form -->
+    <form id="appointmentForm">
+      <div class="form-group">
+        <label for="hospitalName">Hospital Name</label>
+        <input type="text" id="hospitalName" placeholder="Enter hospital name" required>
+      </div>
+      <div class="form-group">
+        <label for="doctorName">Doctor Name</label>
+        <input type="text" id="doctorName" placeholder="Enter doctor name" required>
+      </div>
+      <div class="form-group">
+        <label for="date">Date of Appointment</label>
+        <input type="date" id="date" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Timing</label>
+        <input type="time" id="time" required>
+      </div>
+      <div class="form-group">
+        <label for="reason">Reason</label>
+        <textarea id="reason" placeholder="Enter reason for appointment"></textarea>
+      </div>
+      <button type="submit" class="btn">Add Appointment</button>
+    </form>
+
+    <!-- Appointments List -->
+    <div class="appointments-list" id="appointmentsList"></div>
+  </div>
+
+  <script>
+    // JavaScript for Appointment Functionality
+    const appointmentForm = document.getElementById('appointmentForm');
+    const appointmentsList = document.getElementById('appointmentsList');
+    let appointments = [];
+    let editMode = false;
+    let editId = null;
+
+    // Load appointments from localStorage
+    if (localStorage.getItem('appointments')) {
+      appointments = JSON.parse(localStorage.getItem('appointments'));
+      appointments.forEach(appointment => addAppointmentToDOM(appointment));
+    }
+
+    // Add or Update Appointment
+    appointmentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const hospitalName = document.getElementById('hospitalName').value;
+      const doctorName = document.getElementById('doctorName').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const reason = document.getElementById('reason').value;
+
+      const appointment = {
+        id: editMode ? editId : Date.now(),
+        hospitalName,
+        doctorName,
+        date,
+        time,
+        reason
+      };
+
+      if (editMode) {
+        const index = appointments.findIndex(a => a.id === editId);
+        appointments[index] = appointment;
+        editMode = false;
+        editId = null;
+      } else {
+        appointments.push(appointment);
+      }
+
+      localStorage.setItem('appointments', JSON.stringify(appointments));
+      document.getElementById('appointmentsList').innerHTML = '';
+      appointments.forEach(appointment => addAppointmentToDOM(appointment));
+      appointmentForm.reset();
+    });
+
+    // Add Appointment to DOM
+    function addAppointmentToDOM(appointment) {
+      const appointmentCard = document.createElement('div');
+      appointmentCard.classList.add('appointment-card');
+      appointmentCard.innerHTML = `
+        <h3>${appointment.hospitalName}</h3>
+        <p><strong>Doctor:</strong> ${appointment.doctorName}</p>
+        <p><strong>Date:</strong> ${appointment.date}</p>
+        <p><strong>Time:</strong> ${appointment.time}</p>
+        <p><strong>Reason:</strong> ${appointment.reason}</p>
+        <button class="edit" onclick="editAppointment(${appointment.id})">Edit</button>
+        <button class="delete" onclick="deleteAppointment(${appointment.id})">Delete</button>
+      `;
+      appointmentsList.appendChild(appointmentCard);
+
+      // Set Alarm
+      setAlarm(appointment);
+    }
+
+    // Edit Appointment
+    function editAppointment(id) {
+      const appointment = appointments.find(a => a.id === id);
+      document.getElementById('hospitalName').value = appointment.hospitalName;
+      document.getElementById('doctorName').value = appointment.doctorName;
+      document.getElementById('date').value = appointment.date;
+      document.getElementById('time').value = appointment.time;
+      document.getElementById('reason').value = appointment.reason;
+      editMode = true;
+      editId = id;
+    }
+
+    // Delete Appointment
+    function deleteAppointment(id) {
+      appointments = appointments.filter(appointment => appointment.id !== id);
+      localStorage.setItem('appointments', JSON.stringify(appointments));
+      document.getElementById('appointmentsList').innerHTML = '';
+      appointments.forEach(appointment => addAppointmentToDOM(appointment));
+    }
+
+    // Set Alarm
+    function setAlarm(appointment) {
+      const now = new Date();
+      const appointmentTime = new Date(`${appointment.date}T${appointment.time}`);
+
+      if (appointmentTime > now) {
+        const timeout = appointmentTime - now;
+        setTimeout(() => {
+          playAlarmSound();
+          showNotification(`Appointment Reminder: ${appointment.hospitalName}`, `Doctor: ${appointment.doctorName}, Reason: ${appointment.reason}`);
+        }, timeout);
+      }
+    }
+
+    // Play Alarm Sound
+    function playAlarmSound() {
+      const audio = new Audio('alarm_beeps.mp3');
+      audio.play();
+    }
+
+    // Show Notification
+    function showNotification(title, body) {
+      if (Notification.permission === 'granted') {
+        new Notification(title, { body });
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            new Notification(title, { body });
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

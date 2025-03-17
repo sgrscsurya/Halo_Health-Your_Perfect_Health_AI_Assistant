@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medication Reminders</title>
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg,grey,black,grey);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url('medicationremainderbg.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 20px 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #ddd;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: darkblue;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: green;
+    }
+
+    .reminders-list {
+      margin-top: 20px;
+    }
+
+    .reminder-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .reminder-card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .reminder-card p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    .reminder-card button {
+      background: #ff4d4d;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .reminder-card button:hover {
+      background: #cc0000;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Medication Reminders</h1>
+
+    <!-- Add Reminder Form -->
+    <form id="reminderForm">
+      <div class="form-group">
+        <label for="title">Type of Medication</label>
+        <input type="text" id="title" placeholder="Enter reminder title" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Time</label>
+        <input type="time" id="time" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Enter reminder description"></textarea>
+      </div>
+      <button type="submit" class="btn"><b>Add Reminder</b></button>
+    </form>
+
+    <!-- Reminders List -->
+    <div class="reminders-list" id="remindersList"></div>
+  </div>
+
+  <script>
+    // JavaScript for Reminder Functionality
+    const reminderForm = document.getElementById('reminderForm');
+    const remindersList = document.getElementById('remindersList');
+    let reminders = [];
+
+    // Load reminders from localStorage
+    if (localStorage.getItem('reminders')) {
+      reminders = JSON.parse(localStorage.getItem('reminders'));
+      reminders.forEach(reminder => addReminderToDOM(reminder));
+    }
+
+    // Add Reminder
+    reminderForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const time = document.getElementById('time').value;
+      const description = document.getElementById('description').value;
+
+      const reminder = {
+        id: Date.now(),
+        title,
+        time,
+        description
+      };
+
+      reminders.push(reminder);
+      localStorage.setItem('reminders', JSON.stringify(reminders));
+      addReminderToDOM(reminder);
+      reminderForm.reset();
+    });
+
+    // Add Reminder to DOM
+    function addReminderToDOM(reminder) {
+      const reminderCard = document.createElement('div');
+      reminderCard.classList.add('reminder-card');
+      reminderCard.innerHTML = `
+        <div>
+          <h3>${reminder.title}</h3>
+          <p>${reminder.description}</p>
+          <p><strong>Time:</strong> ${reminder.time}</p>
+        </div>
+        <button onclick="deleteReminder(${reminder.id})">Delete</button>
+      `;
+      remindersList.appendChild(reminderCard);
+
+      // Set Alarm
+      setAlarm(reminder);
+    }
+
+    // Delete Reminder
+    function deleteReminder(id) {
+      reminders = reminders.filter(reminder => reminder.id !== id);
+      localStorage.setItem('reminders', JSON.stringify(reminders));
+      document.getElementById('remindersList').innerHTML = '';
+      reminders.forEach(reminder => addReminderToDOM(reminder));
+    }
+
+    // Set Alarm
+    function setAlarm(reminder) {
+      const now = new Date();
+      const reminderTime = new Date(`${now.toDateString()} ${reminder.time}`);
+
+      if (reminderTime > now) {
+        const timeout = reminderTime - now;
+        setTimeout(() => {
+          playAlarmSound();
+          showNotification(reminder.title, reminder.description);
+        }, timeout);
+      }
+    }
+
+    // Play Alarm Sound
+    function playAlarmSound() {
+      const audio = new Audio('alarm_beeps.mp3');
+      audio.play();
+    }
+
+    // Show Notification
+    function showNotification(title, description) {
+      if (Notification.permission === 'granted') {
+        new Notification(title, { body: description });
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            new Notification(title, { body: description });
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

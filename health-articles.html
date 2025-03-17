@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Articles & Tips</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+            overflow-x: hidden;
+            background: url('healtharticlesbg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #2c3e50;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: #1a1a1a;
+        }
+
+        /* Card Container */
+        .card-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Adjusted to space buttons farther apart */
+            width: 90%;
+            max-width: 1000px; /* Increased max-width to accommodate wider spacing */
+            margin: 20px auto;
+            position: relative;
+        }
+
+        /* Card Styles */
+        .card {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            display: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .save-icon {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .save-icon.saved {
+            color: #ff4b2b;
+            transform: scale(1.2);
+        }
+
+        .save-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            margin: 0 40px; /* Added margin to space buttons farther apart */
+        }
+
+        .nav-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        /* Saved Cards Section */
+        .saved-cards-container {
+            display: none;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .saved-cards-container.active {
+            display: flex;
+        }
+
+        .saved-card {
+            width: calc(33.33% - 20px);
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .saved-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .remove-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: #ff4b2b;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .remove-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* View Saved Button */
+        .view-saved-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .view-saved-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>HEALTH ARTICLES & TIPS</h1>
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search for health tips...">
+        </div>
+
+        <!-- Card Container -->
+        <div class="card-container">
+            <button class="nav-btn" id="prev-btn">← Previous</button>
+            <div id="cards-container"></div>
+            <button class="nav-btn" id="next-btn">Next →</button>
+        </div>
+
+        <!-- View Saved Cards Button -->
+        <button class="view-saved-btn" id="view-saved-btn">View Saved Cards</button>
+
+        <!-- Saved Cards Container -->
+        <div class="saved-cards-container" id="saved-cards-container">
+            <!-- Saved cards will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        // Health Tips Data
+        const healthTips = [
+            { header: "Stay Hydrated 💧", description: "Drinking at least 8 glasses of water daily helps maintain body temperature, flush toxins, and improve digestion." },
+            { header: "Get Enough Sleep 😴", description: "Aim for 7-9 hours of quality sleep to support brain function, immunity, and overall well-being." },
+            { header: "Maintain a Balanced Diet 🥗", description: "Include proteins, healthy fats, fiber, and carbohydrates in your meals for sustained energy and nutrition." },
+            { header: "Limit Sugar Intake 🚫🍭", description: "High sugar consumption can lead to obesity, diabetes, and heart disease. Opt for natural sweeteners instead." },
+            { header: "Avoid Smoking & Alcohol 🚭🍷", description: "Smoking and excessive drinking harm the lungs, liver, and heart. Quit or reduce consumption for a healthier life." },
+            { header: "Stretch Daily 🧘‍♂️", description: "Stretching enhances flexibility, prevents injuries, and reduces muscle stiffness." },
+            { header: "Walk More 🚶‍♂️", description: "Walking 30 minutes a day improves cardiovascular health, burns calories, and boosts mood." },
+            { header: "Strength Training 🏋️‍♂️", description: "Lifting weights strengthens bones, improves metabolism, and helps in muscle building." },
+            { header: "Practice Yoga 🧘", description: "Yoga enhances flexibility, reduces stress, and improves posture and balance." },
+            { header: "Stay Active at Work 💼", description: "Take breaks, stand up, and move every hour to prevent stiffness and back pain." },
+            { header: "Practice Deep Breathing 🌬️", description: "Deep breathing reduces stress, improves oxygen flow, and enhances relaxation." },
+            { header: "Meditate Daily 🕉️", description: "Meditation improves focus, reduces anxiety, and promotes emotional stability." },
+            { header: "Maintain a Journal ✍️", description: "Writing down thoughts helps in self-reflection, emotional clarity, and mental relaxation." },
+            { header: "Spend Time in Nature 🌿", description: "Being outdoors improves mood, reduces stress, and boosts vitamin D levels." },
+            { header: "Limit Social Media Use 📱", description: "Excessive social media usage leads to anxiety and sleep disturbances—set screen time limits." },
+            { header: "Eat More Fruits & Vegetables 🍎🥦", description: "Rich in vitamins and antioxidants, they boost immunity and overall health." },
+            { header: "Consume More Fiber 🌾", description: "Fiber aids digestion, supports gut health, and lowers cholesterol levels." },
+            { header: "Eat Healthy Fats 🥑", description: "Include nuts, seeds, and olive oil for heart and brain health." },
+            { header: "Stay Away from Processed Foods 🚫🍔", description: "Processed foods contain unhealthy additives and preservatives—opt for fresh meals." },
+            { header: "Reduce Salt Intake 🧂", description: "Excess salt raises blood pressure; use herbs and spices for flavor instead." },
+            { header: "Portion Control 🍽️", description: "Eating in moderation helps maintain a healthy weight and prevents overeating." },
+            { header: "Eat Mindfully 🧠", description: "Avoid distractions while eating; focus on chewing and enjoying each bite." },
+            { header: "Drink Green Tea 🍵", description: "Green tea boosts metabolism, aids weight loss, and detoxifies the body." },
+            { header: "Avoid Late-Night Snacking 🌙", description: "Eating before bedtime can cause weight gain and digestive issues." },
+            { header: "Stay Consistent with Workouts 💪", description: "Regular exercise prevents obesity and promotes better body composition." },
+            { header: "Do Cardio Exercises ❤️", description: "Activities like running, cycling, or swimming strengthen the heart." },
+            { header: "Monitor Your Cholesterol 📊", description: "High cholesterol increases heart disease risk—check levels regularly." },
+            { header: "Eat More Omega-3s 🐟", description: "Found in fish, nuts, and seeds, omega-3s support heart health." },
+            { header: "Control Blood Pressure 🩺", description: "Reduce salt, manage stress, and exercise to maintain normal levels." },
+            { header: "Laugh More 😆", description: "Laughter reduces stress hormones and benefits heart health." },
+            { header: "Get Enough Vitamin C 🍊", description: "Oranges, bell peppers, and kiwis boost immunity." },
+            { header: "Wash Hands Regularly 👐", description: "Reduces the risk of infections and viruses." },
+            { header: "Get Vaccinated 💉", description: "Stay up-to-date on vaccines for disease prevention." },
+            { header: "Avoid Touching Your Face 🚫", description: "Prevents the spread of germs and bacteria." },
+            { header: "Boost Gut Health 🦠", description: "Eat probiotics like yogurt and fermented foods for a strong immune system." },
+            { header: "Regular Breast Self-Exams 🎗️", description: "Early detection helps prevent breast cancer." },
+            { header: "Get Enough Iron 🥩", description: "Prevents anemia and fatigue, especially during menstruation." },
+            { header: "Practice Safe Hygiene 🧼", description: "Maintain vaginal health with proper hygiene and breathable fabrics." },
+            { header: "Track Your Menstrual Cycle 📅", description: "Helps detect irregularities and manage PMS symptoms." },
+            { header: "Stay Active During Pregnancy 🤰", description: "Light exercise improves circulation and reduces stress." },
+            { header: "Check Testosterone Levels 🧪", description: "Low levels can affect energy and mood—get checked if needed." },
+            { header: "Manage Prostate Health 🍅", description: "Eat tomatoes, nuts, and green tea for prostate support." },
+            { header: "Avoid Excessive Red Meat 🥩", description: "High consumption may increase heart disease risk." },
+            { header: "Prioritize Mental Health 🧠", description: "Seek support when needed and practice self-care." },
+            { header: "Get Regular Health Screenings 🏥", description: "Early detection prevents major health issues." },
+            { header: "Stay Socially Connected 👫", description: "Strong relationships promote mental and emotional well-being." },
+            { header: "Protect Your Skin ☀️", description: "Use sunscreen and moisturizers to prevent aging and skin damage." },
+            { header: "Strengthen Your Bones 🦴", description: "Get enough calcium and vitamin D to prevent osteoporosis." },
+            { header: "Challenge Your Brain 🧩", description: "Solve puzzles, read books, and learn new skills to stay sharp." },
+            { header: "Embrace a Positive Mindset 😊", description: "A positive outlook enhances mental and physical well-being." }
+        ];
+
+        let currentIndex = 0;
+        let savedCards = JSON.parse(localStorage.getItem("savedCards")) || [];
+
+        // Function to create a card
+        function createCard(tip, index) {
+            const card = document.createElement("div");
+            card.classList.add("card");
+            if (index === currentIndex) card.classList.add("active");
+
+            const header = document.createElement("h2");
+            header.textContent = tip.header;
+
+            const description = document.createElement("p");
+            description.textContent = tip.description;
+
+            const saveIcon = document.createElement("i");
+            saveIcon.classList.add("fas", "fa-bookmark", "save-icon");
+            if (savedCards.includes(index)) saveIcon.classList.add("saved");
+            saveIcon.addEventListener("click", () => toggleSave(index));
+
+            card.appendChild(header);
+            card.appendChild(description);
+            card.appendChild(saveIcon);
+
+            return card;
+        }
+
+        // Function to toggle save
+        function toggleSave(index) {
+            if (savedCards.includes(index)) {
+                savedCards.splice(savedCards.indexOf(index), 1);
+            } else {
+                savedCards.push(index);
+            }
+            localStorage.setItem("savedCards", JSON.stringify(savedCards));
+            renderCards();
+        }
+
+        // Function to render cards
+        function renderCards() {
+            const cardsContainer = document.getElementById("cards-container");
+            const savedCardsContainer = document.getElementById("saved-cards-container");
+
+            // Clear containers
+            cardsContainer.innerHTML = "";
+            savedCardsContainer.innerHTML = "";
+
+            // Render the current card
+            const card = createCard(healthTips[currentIndex], currentIndex);
+            cardsContainer.appendChild(card);
+
+            // Render saved cards
+            savedCards.forEach(index => {
+                const savedCard = document.createElement("div");
+                savedCard.classList.add("saved-card");
+
+                const header = document.createElement("h2");
+                header.textContent = healthTips[index].header;
+
+                const description = document.createElement("p");
+                description.textContent = healthTips[index].description;
+
+                const removeIcon = document.createElement("i");
+                removeIcon.classList.add("fas", "fa-times", "remove-icon");
+                removeIcon.addEventListener("click", () => removeSavedCard(index));
+
+                savedCard.appendChild(header);
+                savedCard.appendChild(description);
+                savedCard.appendChild(removeIcon);
+
+                savedCardsContainer.appendChild(savedCard);
+            });
+        }
+
+        // Function to remove a saved card
+        function removeSavedCard(index) {
+            savedCards = savedCards.filter(i => i !== index);
+            localStorage.setItem("savedCards", JSON.stringify(savedCards));
+            renderCards();
+        }
+
+        // Function to navigate to the previous card
+        function goToPreviousCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCards();
+            }
+        }
+
+        // Function to navigate to the next card
+        function goToNextCard() {
+            if (currentIndex < healthTips.length - 1) {
+                currentIndex++;
+                renderCards();
+            }
+        }
+
+        // Event listeners for navigation buttons
+        document.getElementById("prev-btn").addEventListener("click", goToPreviousCard);
+        document.getElementById("next-btn").addEventListener("click", goToNextCard);
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft") {
+                goToPreviousCard();
+            } else if (e.key === "ArrowRight") {
+                goToNextCard();
+            }
+        });
+
+        // Function to toggle saved cards view
+        document.getElementById("view-saved-btn").addEventListener("click", () => {
+            const savedCardsContainer = document.getElementById("saved-cards-container");
+            savedCardsContainer.classList.toggle("active");
+        });
+
+        // Function to search health tips
+        document.getElementById("search-input").addEventListener("input", (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredTips = healthTips.filter(tip => 
+                tip.header.toLowerCase().includes(searchTerm) || 
+                tip.description.toLowerCase().includes(searchTerm)
+            );
+            if (filteredTips.length > 0) {
+                currentIndex = healthTips.indexOf(filteredTips[0]);
+                renderCards();
+            }
+        });
+
+        // Initial render
+        renderCards();
+    </script>
+</body>
+</html>

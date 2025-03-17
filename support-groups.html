@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Support Groups and Community</title>
+  <style>
+    /* General Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg,blue,skyblue,pink, blue);
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      color: #2c3e50;
+    }
+
+    h2 {
+      color: #34495e;
+      margin: 20px 10px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .button {
+      display: block;
+      padding: 15px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      background-color: #3498db;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #2980b9;
+    }
+
+    .whatsapp {
+      background-color: #25d366;
+    }
+
+    .whatsapp:hover {
+      background-color: #128c7e;
+    }
+
+    .telegram {
+      background-color: #0088cc;
+    }
+
+    .telegram:hover {
+      background-color: #005f8b;
+    }
+
+    /* Scrollable Container */
+    .scrollable {
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><u>Medical Support Groups and Community</u></h1>
+
+    <!-- WhatsApp Groups Section -->
+    <h2>WHATSAPP</h2>
+    <div class="scrollable">
+      <div class="button-group">
+        <a href="https://chat.whatsapp.com/EkS5yco9YVh90zXr27tz0n" class="button whatsapp">Medical Support Group (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/J8qLBSnS1t07IfcOnOD1bE" class="button whatsapp">Doctors and Nurses Tips (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/H4i1dyLITHRED8dhX0qF7U" class="button whatsapp">Doctor at your Online Call (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/invite/GQBXxdx76BR3hWLAlRb6rA" class="button whatsapp">Information about Medical (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/invite/FyFJ21wyTFC4v33nCo0mdJ" class="button whatsapp">Science Stream (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/invite/0smZUES7rmA4GNvDae8PBL" class="button whatsapp">Ayurveda Therapy (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/invite/C0O8Vh74lPr8fyTC3Yevb2" class="button whatsapp">Study MBBS (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/invite/0qUFf7kLtGqB9L9YLJ9inH" class="button whatsapp">Pharmacist Centre (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/D1rMFiJWoGB0Hv2yen9M5K" class="button whatsapp">Pharmacy - The Way of Success Community (Whatsapp)</a>
+        <a href="https://chat.whatsapp.com/HxMzr18WdplKjIIpL29rnh" class="button whatsapp">Medical Informative Group (Whatsapp)</a>
+      </div>
+    </div>
+
+    <!-- Telegram Groups Section -->
+    <h2>TELEGRAM</h2>
+    <div class="scrollable">
+      <div class="button-group">
+        <a href="https://t.me/Guidelines_LinksMedicus" class="button telegram">Clinical Practice Guidelines (Telegram)</a>
+        <a href="https://t.me/mhphsupport" class="button telegram">Mental Health PH Support Group (Telegram)</a>
+        <a href="https://t.me/Medicine_Youtube" class="button telegram">Medical Youtube Videos (Telegram)</a>
+        <a href="https://t.me/Medical_journals_and_updates" class="button telegram">Medicine Updates by MEDIROBOT (Telegram)</a>
+        <a href="https://t.me/drugs_and_diseases" class="button telegram">Drugs and Diseases (Telegram)</a>
+        <a href="https://t.me/+XBou0e4zE2g2YTg1" class="button telegram">TamilNadu Blood Donors Community (Telegram)</a>
+        <a href="https://t.me/+sMjUKG8i7R9iNTQ0" class="button telegram">HIV/AIDS Awareness Campaign (Telegram)</a>
+        <a href="https://t.me/+RGtCUxstELGYNPG8rAkBNw" class="button telegram">NASCOP HIV M&E E-Learning Support Group (Telegram)</a>
+        <a href="https://t.me/joinchat/AAAAAEaW06F081qi5oqZjA" class="button telegram">Medical Education (Telegram)</a>
+        <a href="https://t.me/joinchat/Eo_F0xec2ww8Pd0wVBYDZA" class="button telegram">Pregnancy Support Group by MotherhoodNg (Telegram)</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript for additional functionality (if needed)
+    // Example: Add a confirmation dialog before redirecting
+    document.querySelectorAll('.button').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const confirmRedirect = confirm(`You are about to be redirected to ${button.innerText}. Do you want to proceed?`);
+        if (!confirmRedirect) {
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

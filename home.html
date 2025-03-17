@@ -1,0 +1,281 @@
+<?php
+session_start();
+if (!isset($_SESSION["user"])) {
+    header("Location: login.html");
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halo Health - Chatbot</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            background: #f5f5f5;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        /* Chatbot Container */
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            overflow-y: auto;
+            margin-bottom: 80px; /* Space for fixed input area */
+            background: url('chatbotbg.jpg') no-repeat center center fixed;
+    background-size: cover;
+        }
+
+        /* Chatbox */
+        .chatbox {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Chat Messages */
+        .message {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .message p {
+            max-width: 70%;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 0; /* Remove default margin */
+        }
+
+        .message.user p {
+            background: #6a11cb;
+            color: white;
+            border-radius: 12px 12px 0 12px;
+        }
+
+        .message.bot p {
+            background: #f1f1f1;
+            color: #333;
+            border-radius: 12px 12px 12px 0;
+        }
+
+        /* Input Area */
+        .input-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-area input {
+            flex: 1;
+            max-width: 800px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-area input:focus {
+            border-color: #6a11cb;
+        }
+
+        .input-area button {
+            padding: 12px 20px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .input-area button:hover {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+        }
+
+        /* Stop Button */
+        .input-area .stop-button {
+            background: #ff4d4d;
+        }
+
+        .input-area .stop-button:hover {
+            background: #cc0000;
+        }
+
+        /* Dark/Light Mode Toggle */
+.mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow: hidden; /* Ensures image fits within the circular button */
+}
+
+.mode-toggle img {
+    width: 100%;  /* Makes the image fill the circular button */
+    height: 100%; /* Ensures full height coverage */
+    object-fit: cover; /* Prevents distortion and maintains aspect ratio */
+    border-radius: 50%; /* Ensures the image remains circular */
+}
+
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: #1a1a1a;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .chatbox {
+            background: #2c3e50;
+        }
+
+        body.dark-mode .message.bot p {
+            background: #34495e;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .input-area input {
+            background: #121b24;
+            border-color: #444;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .input-area button {
+            background: linear-gradient(to right, #8e44ad, #3498db);
+        }
+
+        body.dark-mode .input-area button:hover {
+            background: linear-gradient(to right, #3498db, #8e44ad);
+        }
+    </style>
+</head>
+<body>
+    <!-- Dark/Light Mode Toggle -->
+    <div class="mode-toggle" onclick="toggleDarkMode()">
+        <img src="light-mode-icon.png" alt="Toggle Dark Mode" id="mode-icon">
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>Halo Health Assistant</h1>
+    </header>
+
+    <!-- Chatbot Container -->
+    <div class="container">
+        <div class="chatbox" id="chatbox">
+            <!-- Bot's Initial Message -->
+            <div class="message bot">
+                <img src="logo.png" alt="Bot Icon">
+                <p>Hello! How can I help you today?</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">Send</button>
+        <button class="stop-button" onclick="stopResponse()">⏹️ Stop</button>
+    </div>
+
+    <!-- Link to homejs.js -->
+    <script src="homejs.js"></script>
+
+    <!-- Additional Script for Dark Mode and Enter Key -->
+    <script>
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const body = document.body;
+            const modeIcon = document.getElementById("mode-icon");
+            body.classList.toggle("dark-mode");
+
+            if (body.classList.contains("dark-mode")) {
+                modeIcon.src = "light-mode-icon.png";
+            } else {
+                modeIcon.src = "dark-mode-icon.png";
+            }
+        }
+
+        // Handle Enter Key Press
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>

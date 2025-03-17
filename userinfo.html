@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HALO HEALTH - User Onboarding</title>
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px; /* Added padding to body */
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      margin: 20px; /* Added margin to card */
+    }
+    .card h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .input-field label {
+      color: #fff;
+    }
+    .input-field input, .input-field select {
+      color: #fff;
+      border-bottom: 1px solid #fff;
+    }
+    .input-field input:focus, .input-field select:focus {
+      border-bottom: 1px solid #ff4081;
+      box-shadow: 0 1px 0 0 #ff4081;
+    }
+    .btn {
+      background: #ff4081;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #e91e63;
+      transform: translateY(-2px);
+    }
+    .checkbox-label {
+      color: #fff;
+      font-size: 14px;
+    }
+    .checkbox-label a {
+      color: #ff4081;
+      text-decoration: none;
+    }
+    .checkbox-label a:hover {
+      text-decoration: underline;
+    }
+    .graphic {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .graphic img {
+      width: 100px;
+      height: 100px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    .radio-group {
+      margin-top: 10px;
+    }
+    .radio-group label {
+      margin-right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="graphic">
+      <img src="logo.png" alt="HALO HEALTH Logo">
+    </div>
+    <h2>Welcome to HALO HEALTH</h2>
+    <form id="userForm">
+      <div class="input-field">
+        <input id="userName" type="text" class="validate" required>
+        <label for="userName">User Name</label>
+      </div>
+      <div class="input-field">
+        <select id="gender" required>
+          <option value="" disabled selected>Choose your gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="transgender">Transgender</option>
+        </select>
+        <label>Gender</label>
+      </div>
+      <div class="input-field">
+        <input id="age" type="number" class="validate" required>
+        <label for="age">Age</label>
+      </div>
+      <div class="input-field">
+        <input id="bloodGroup" type="text" class="validate" required>
+        <label for="bloodGroup">Blood Group</label>
+      </div>
+      <div class="input-field">
+        <input id="email" type="email" class="validate" required>
+        <label for="email">Email</label>
+      </div>
+      <div class="input-field">
+        <input id="phoneNumber" type="tel" class="validate" required>
+        <label for="phoneNumber">Phone Number</label>
+      </div>
+      <div class="input-field">
+        <p class="checkbox-label">Do you have any Disabilities?</p>
+        <div class="radio-group">
+          <label>
+            <input name="disability" type="radio" value="yes" />
+            <span>Yes</span>
+          </label>
+          <label>
+            <input name="disability" type="radio" value="no" />
+            <span>No</span>
+          </label>
+        </div>
+      </div>
+      <div class="input-field">
+        <p class="checkbox-label">
+          <label>
+            <input type="checkbox" id="terms" class="filled-in" required>
+            <span>I agree to the <b><a href="#">Terms and Conditions</b></span>
+          </label>
+        </p>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Custom JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize Materialize select dropdown
+      var elems = document.querySelectorAll('select');
+      M.FormSelect.init(elems);
+
+      // Form submission
+      document.getElementById('userForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Validate form
+        if (document.getElementById('terms').checked) {
+          // Redirect to main-menu.html
+          window.location.href = 'main-menu.html';
+        } else {
+          alert('Please agree to the Terms and Conditions.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

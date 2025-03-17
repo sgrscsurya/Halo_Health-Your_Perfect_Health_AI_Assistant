@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halo Health - Main Menu</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+ /* Body Styling */
+/* Body Styling */
+body {
+    background: url('mainmenubg.jpg') no-repeat top center;
+    background-size: cover;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    backdrop-filter: blur(3px); /* Very slight blur effect */
+}
+
+
+        /* Container for Main Menu */
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Subheading Styling */
+        .subheading {
+            font-size: 1.7rem;
+            margin: 30px 0 15px 0;
+            color: #fff;
+            text-align: left;
+            width: 90%;
+            max-width: 1200px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        /* Button Styling */
+        .menu-btn {
+            background: linear-gradient(135deg, #ff0b0b, #2529fc);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-btn strong {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .menu-btn span {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Button Hover Effects */
+        .menu-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #1100fa, #f80303);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #6a11cb, #2575fc);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #2575fc, #6a11cb);
+        }
+
+        /* Three-dot Menu Container */
+        .menu-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Three-dot Menu Icon */
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .menu-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dropdown Menu */
+        .menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: rgba(44, 62, 80, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            width: 200px;
+            z-index: 1000;
+        }
+
+        .menu-dropdown.show {
+            display: block;
+        }
+
+        /* Menu Items */
+        .menu-item {
+            display: block;
+            padding: 12px 16px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Logout Item (Red Color) */
+        .menu-item:last-child {
+            color: #ff6b6b;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item:last-child:hover {
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <script>
+        // Toggle menu dropdown
+        function toggleMenu() {
+            const dropdown = document.getElementById("menuDropdown");
+            dropdown.classList.toggle("show");
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function (event) {
+            if (!event.target.matches('.menu-icon')) {
+                const dropdowns = document.getElementsByClassName("menu-dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    if (dropdowns[i].classList.contains('show')) {
+                        dropdowns[i].classList.remove('show');
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Services Provided by Halo Health</h1>
+        
+        <!-- Health Tools -->
+        <h2 class="subheading">Health Tools</h2>
+        <div class="menu-grid">
+            <button class="menu-btn" onclick="window.location.href='home.html'">
+                <strong>Ask a Health Question</strong><br>
+                <span>Chat with the AI assistant</span>
+            </button>
+            <button class="menu-btn" onclick="window.location.href='medication-reminders.html'">
+                <strong>Medication Reminders</strong><br>
+                <span>Set pill and treatment alerts</span>
+            </button>
+        </div>
+    
+        <!-- Lifestyle & Wellness -->
+        <h2 class="subheading">Lifestyle & Wellness</h2>
+        <div class="menu-grid">
+            <button class="menu-btn" onclick="window.location.href='nutrition-diet.html'">
+                <strong>Nutrition & Diet Plans</strong><br>
+                <span>Meal plans & calorie tracking</span>
+            </button>
+            <button class="menu-btn" onclick="window.location.href='mental-wellness.html'">
+                <strong>Mental Wellness & Meditation</strong><br>
+                <span>Stress relief & mindfulness</span>
+            </button>
+        </div>
+    
+        <!-- Appointments & Consultations -->
+        <h2 class="subheading">Appointments & Consultations</h2>
+        <div class="menu-grid">
+            <button class="menu-btn" onclick="window.location.href='appointments.html'">
+                <strong>Appointments & Consultations</strong><br>
+                <span>Book & manage doctor visits</span>
+            </button>
+            <button class="menu-btn" onclick="window.location.href='find-clinics.html'">
+                <strong>Find Nearby Clinics & Hospitals</strong><br>
+                <span>Locate healthcare centers</span>
+            </button>
+        </div>
+    
+        <!-- Emergency & Support -->
+        <h2 class="subheading">Emergency & Support</h2>
+        <div class="menu-grid">
+            <button class="menu-btn" onclick="window.location.href='emergency-sos.html'">
+                <strong>Emergency SOS</strong><br>
+                <span>Call emergency contacts</span>
+            </button>
+            <button class="menu-btn" onclick="window.location.href='support-groups.html'">
+                <strong>Support Groups & Community</strong><br>
+                <span>Join health discussions</span>
+            </button>
+        </div>
+    
+        <!-- Resources & Pharmacy -->
+        <h2 class="subheading">Resources & Pharmacy</h2>
+        <div class="menu-grid">
+            <button class="menu-btn" onclick="window.location.href='health-articles.html'">
+                <strong>Health Articles & Tips</strong><br>
+                <span>Verified health guides</span>
+            </button>
+            <button class="menu-btn" onclick="window.location.href='online-pharmacy.html'">
+                <strong>Online Pharmacy</strong><br>
+                <span>Buy medicines & supplements</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Three-dot Menu -->
+   <!-- Three-dot Menu -->
+<div class="menu-container">
+    <div class="menu-icon" onclick="toggleMenu()">&#8942;</div>
+    <div class="menu-dropdown" id="menuDropdown">
+        <a href="#" class="menu-item">Profile</a>
+        <a href="#" class="menu-item">Privacy and Security</a>
+        <a href="#" class="menu-item">Notifications & Alerts</a>
+        <a href="#" class="menu-item">Settings</a>
+        <a href="login.html" class="menu-item">Logout</a>
+    </div>
+</div>
+</body>
+</html>

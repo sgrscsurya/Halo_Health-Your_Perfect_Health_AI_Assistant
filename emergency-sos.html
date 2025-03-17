@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency SOS</title>
+    <style>
+        /* Emergency SOS Page Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #1a1a1a, #2c3e50);
+            color: white;
+            overflow-y: auto;
+            background: url('emergencybg.jpg') no-repeat center center fixed;
+    background-size: cover;
+        }
+
+        #es-header {
+            background: red;
+            color: white;
+            padding: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .es-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 60px;
+            padding-bottom: 20px;
+        }
+
+        .sos-button, .add-button, .submit-button {
+            background: #ff4b2b;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+        }
+
+        .sos-button:hover, .add-button:hover, .submit-button:hover {
+            background: #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        .contact-form {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 50px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            margin: 20px 0;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .contact-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .contact-list {
+            width: 90%;
+            max-width: 400px;
+            margin: 10px 0;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            flex-wrap: wrap;
+        }
+
+        .contact-item div {
+            flex: 1;
+        }
+
+        .contact-item .buttons {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+        }
+
+        .contact-item button {
+            background: #ff4b2b;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item button:hover {
+            background: #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        .contact-item .delete-button {
+            background: #ff1a1a;
+        }
+
+        .contact-item .delete-button:hover {
+            background: #ff4d4d;
+        }
+    </style>
+</head>
+<body>
+    <header id="es-header">Emergency SOS</header>
+    
+    <div class="es-container">
+        <button class="sos-button" onclick="callEmergency()">🚨 Call Emergency (108)</button>
+        <button class="add-button" onclick="showContactForm()">➕ Add Medical Contact</button>
+
+        <!-- Add Contact Form -->
+        <div class="contact-form" id="contact-form">
+            <h2>Add Medical Contact</h2>
+            <input type="text" id="hospital-name" placeholder="Hospital Name">
+            <input type="text" id="doctor-name" placeholder="Doctor Name">
+            <input type="text" id="specification" placeholder="Specification">
+            <input type="tel" id="contact-number" placeholder="Contact Number">
+            <button class="submit-button" onclick="saveContact()">Save Contact</button>
+        </div>
+
+        <!-- Contact List -->
+        <div class="contact-list">
+            <h2>Saved Contacts</h2>
+            <ul id="contact-list"></ul>
+        </div>
+    </div>
+    
+    <script>
+        // Load saved contacts from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            loadContacts();
+        });
+
+        // Function to load saved contacts
+        function loadContacts() {
+            const savedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
+            const contactList = document.getElementById("contact-list");
+
+            savedContacts.forEach(contact => {
+                const li = document.createElement("li");
+                li.className = "contact-item";
+                li.innerHTML = `
+                    <div>
+                        <strong>${contact.hospitalName}</strong><br>
+                        <span>${contact.doctorName} (${contact.specification})</span><br>
+                        <span>📞 ${contact.contactNumber}</span>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="callNumber('${contact.contactNumber}')">📞 Call</button>
+                        <button class="delete-button" onclick="deleteContact(this)">🗑️ Delete</button>
+                    </div>
+                `;
+                contactList.appendChild(li);
+            });
+        }
+
+        // Function to show the contact form
+        function showContactForm() {
+            document.getElementById("contact-form").style.display = "block";
+        }
+
+        // Function to save a new contact
+        function saveContact() {
+            const hospitalName = document.getElementById("hospital-name").value;
+            const doctorName = document.getElementById("doctor-name").value;
+            const specification = document.getElementById("specification").value;
+            const contactNumber = document.getElementById("contact-number").value;
+
+            if (!hospitalName || !doctorName || !specification || !contactNumber) {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            // Create a new contact object
+            const contact = {
+                hospitalName,
+                doctorName,
+                specification,
+                contactNumber
+            };
+
+            // Save the contact to localStorage
+            const savedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
+            savedContacts.push(contact);
+            localStorage.setItem("contacts", JSON.stringify(savedContacts));
+
+            // Add the contact to the list
+            const contactList = document.getElementById("contact-list");
+            const li = document.createElement("li");
+            li.className = "contact-item";
+            li.innerHTML = `
+                <div>
+                    <strong>${hospitalName}</strong><br>
+                    <span>${doctorName} (${specification})</span><br>
+                    <span>📞 ${contactNumber}</span>
+                </div>
+                <div class="buttons">
+                    <button onclick="callNumber('${contactNumber}')">📞 Call</button>
+                    <button class="delete-button" onclick="deleteContact(this)">🗑️ Delete</button>
+                </div>
+            `;
+            contactList.appendChild(li);
+
+            // Clear the form
+            document.getElementById("hospital-name").value = "";
+            document.getElementById("doctor-name").value = "";
+            document.getElementById("specification").value = "";
+            document.getElementById("contact-number").value = "";
+
+            // Hide the form
+            document.getElementById("contact-form").style.display = "none";
+        }
+
+        // Function to call a number
+        function callNumber(number) {
+            window.location.href = `tel:${number}`;
+        }
+
+        // Function to delete a contact
+        function deleteContact(button) {
+            const contactItem = button.closest("li");
+            const contactNumber = contactItem.querySelector("span").textContent.replace("📞 ", "");
+
+            // Remove the contact from localStorage
+            const savedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
+            const updatedContacts = savedContacts.filter(contact => contact.contactNumber !== contactNumber);
+            localStorage.setItem("contacts", JSON.stringify(updatedContacts));
+
+            // Remove the contact from the list
+            contactItem.remove();
+        }
+
+        // Function to call emergency number (108)
+        function callEmergency() {
+            window.location.href = "tel:108";
+        }
+    </script>
+</body>
+</html>

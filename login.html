@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halo Health - Login</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        .login-body {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            animation: backgroundFade 5s infinite alternate;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.7);
+        }
+
+        /* Login & Signup Containers */
+        .login-container, .signup-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.8s ease-out;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .signup-container {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .login-container h2, .signup-container h2 {
+            color: #333;
+            font-size: 24px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* Input Fields */
+        input {
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #ff4b2b;
+            outline: none;
+            box-shadow: 0px 0px 10px rgba(255, 75, 43, 0.5);
+        }
+
+        /* Button Styling */
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            transform: scale(1.05);
+            box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Links */
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        a {
+            color: #ff4b2b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #ff416c;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes backgroundFade {
+            0% {
+                background: linear-gradient(to right, #ff416c, #ff4b2b);
+            }
+            100% {
+                background: linear-gradient(to right, #ff4b2b, #ff416c);
+            }
+        }
+
+        /* Form Transition */
+        .form-transition {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="login-body">
+    <!-- Video Background -->
+    <video class="video-background" autoplay muted loop>
+        <source src="background-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Login Container -->
+    <div class="login-container" id="login-container">
+        <h2>Halo Health</h2>
+        <!-- LOGIN FORM -->
+        <form id="login-form">
+            <input type="text" placeholder="Username or Email" name="username" id="login-username" required>
+            <input type="password" placeholder="Password" name="password" id="login-password" required>
+            <button type="submit">Log in</button>
+            <p>Don't have an account? <a href="#" onclick="showSignup()">Sign up</a></p>
+        </form>
+    </div>
+
+    <!-- Signup Container -->
+    <div class="signup-container" id="signup-container">
+        <h2>Halo Health</h2>
+        <!-- SIGNUP FORM -->
+        <form id="signup-form">
+            <input type="text" placeholder="Username" name="username" id="signup-username" required>
+            <input type="email" placeholder="Email" name="email" id="signup-email" required>
+            <input type="password" placeholder="Password" name="password" id="signup-password" required>
+            <input type="password" placeholder="Confirm Password" id="signup-confirm-password" required>
+            <button type="submit">Sign Up</button>
+            <p>Already have an account? <a href="#" onclick="showLogin()">Log in</a></p>
+        </form>
+    </div>
+
+    <script>
+        // Toggle between login & signup forms
+        function showSignup() {
+            const loginContainer = document.getElementById("login-container");
+            const signupContainer = document.getElementById("signup-container");
+    
+            loginContainer.style.opacity = "0";
+            loginContainer.style.transform = "translateY(-20px)";
+            setTimeout(() => {
+                loginContainer.style.display = "none";
+                signupContainer.style.display = "block";
+                setTimeout(() => {
+                    signupContainer.style.opacity = "1";
+                    signupContainer.style.transform = "translateY(0)";
+                }, 50);
+            }, 300);
+        }
+    
+        function showLogin() {
+            const loginContainer = document.getElementById("login-container");
+            const signupContainer = document.getElementById("signup-container");
+    
+            signupContainer.style.opacity = "0";
+            signupContainer.style.transform = "translateY(20px)";
+            setTimeout(() => {
+                signupContainer.style.display = "none";
+                loginContainer.style.display = "block";
+                setTimeout(() => {
+                    loginContainer.style.opacity = "1";
+                    loginContainer.style.transform = "translateY(0)";
+                }, 50);
+            }, 300);
+        }
+    
+        // Function to handle form submission (without server)
+        function handleSubmit(formId, redirectPage) {
+            document.getElementById(formId).addEventListener("submit", function (e) {
+                e.preventDefault(); // Prevent form submission
+    
+                // Redirect to the specified page
+                window.location.href = redirectPage;
+    
+                // Clear form fields
+                this.reset();
+            });
+        }
+    
+        // Attach event listeners for login and signup
+        handleSubmit("login-form", "main-menu.html"); // Redirect to main-menu.html on login
+        handleSubmit("signup-form", "userinfo.html"); // Redirect to userinfo.html on signup
+    </script>
+</body>
+</html>

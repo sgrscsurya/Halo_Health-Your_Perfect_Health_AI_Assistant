@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HALO HEALTH - Mental Wellness and Meditation</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      background: url('mentalwellnessbg.jpg') no-repeat center center;
+      background-size: cover;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ff6f61;
+    }
+
+    /* Main Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: url('https://source.unsplash.com/1600x900/?meditation') no-repeat center center/cover;
+      position: relative;
+    }
+
+    .hero::before {
+      /* content: ''; */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    /* Meditation Phases Section */
+    .phases {
+      padding: 50px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      /* backdrop-filter: blur(10px); */
+      text-align: center;
+    }
+
+    .phases h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .phase-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .phase-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      margin: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .phase-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0px 50px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .phase-card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .phase-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .phase-card p {
+      font-size: 1rem;
+      color: #ddd;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      margin-top: 50px;
+    }
+
+    footer p {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">HALO HEALTH</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Mental Wellness and Meditation</h1>
+      <p>Find peace and balance in your life with guided meditation and mindfulness practices.</p>
+    </div>
+  </section>
+
+  <section class="phases">
+    <h2>Meditation Phases</h2>
+    <div class="phase-container">
+      <div class="phase-card">
+        <img src="https://media.istockphoto.com/id/1428299005/photo/man-is-sitting-in-a-camping-chair-on-the-background-of-a-forest-lake-on-a-beautiful-summer.jpg?s=612x612&w=0&k=20&c=dQZLIQGXpyLxWvtdpsRkpRXEqM4vZCGefzPtV9h_9Uk=" alt="Nature">
+        <h3>Relaxation</h3>
+        <p><b>Focus on your breath and let go of all tension.</b></p>
+      </div>
+      <div class="phase-card">
+        <img src="https://img.freepik.com/free-vector/chakras-concept-colorful-design_23-2148559951.jpg" alt="Forest">
+        <h3>Mindfulness</h3>
+        <p><b>Be present in the moment and observe your thoughts.</b></p>
+      </div>
+      <div class="phase-card">
+        <img src="https://media.istockphoto.com/id/505508726/photo/man-with-stressed-face-expression-brain-melting-into-lines.jpg?s=612x612&w=0&k=20&c=8O64VDr3WfSoMplqBXkdZ-2cHdzN3lw0xJoihfWGhi0=" alt="Ocean">
+        <h3>Clarity</h3>
+        <p><b>Gain clarity and focus on your goals.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 HALO HEALTH. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Random Meditation Phrases
+    const phrases = [
+      "Breathe in calm, breathe out stress.",
+      "Let go of what you cannot control.",
+      "Peace begins with a single breath.",
+      "Be present, be mindful, be free.",
+      "Every moment is a new beginning.",
+      "Find stillness within the chaos.",
+      "Your mind is a garden, nurture it.",
+    ];
+
+    const heroText = document.querySelector('.hero p');
+    setInterval(() => {
+      const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+      heroText.textContent = randomPhrase;
+    }, 5000);
+  </script>
+</body>
+</html>
