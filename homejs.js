@@ -7,7 +7,7 @@ async function fetchModelResponse(body) {
     const chatbox = document.getElementById("chatbox");
 
     // Add loading message
-    const botMessage = createMessageElement("bot", "Fetching Reliable Medical Details...");
+    const botMessage = createMessageElement("bot", "Fetching Reliable Medical Details. Analyzing Your Health Report...");
     chatbox.appendChild(botMessage);
     chatbox.scrollTop = chatbox.scrollHeight;
 
