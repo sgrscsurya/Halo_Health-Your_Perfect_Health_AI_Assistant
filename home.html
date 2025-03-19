@@ -221,6 +221,65 @@ if (!isset($_SESSION["user"])) {
         body.dark-mode .input-area button:hover {
             background: linear-gradient(to right, #3498db, #8e44ad);
         }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+    .chatbox {
+        width: 90vw;
+        padding: 15px;
+    }
+
+    .message p {
+        max-width: 90%;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .input-area {
+        flex-direction: column;
+        padding: 8px;
+    }
+
+    .input-area input {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .input-area button {
+        width: 100%;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .mode-toggle {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .input-area {
+        flex-direction: row; /* Ensures elements stay in a single row */
+        flex-wrap: nowrap; /* Prevents wrapping to the next line */
+        align-items: center;
+        padding: 8px;
+    }
+
+    .input-area input {
+        width: 60%; /* Adjust width to leave space for buttons */
+        font-size: 13px;
+    }
+
+    .input-area button {
+        width: auto; /* Ensures buttons do not take full width */
+        font-size: 13px;
+        padding: 10px;
+        white-space: nowrap; /* Prevents text from breaking */
+    }
+}
+
     </style>
 </head>
 <body>

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="logo.png">
   <title>HALO HEALTH - Mental Wellness and Meditation</title>
   <style>
     /* General Reset */
@@ -25,25 +26,34 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 50px;
+      padding: 15px 30px;
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
       position: fixed;
       width: 100%;
+      top: 0;
+      left: 0;
       z-index: 1000;
     }
 
+    /* Brand Logo */
     .brand {
       font-size: 24px;
       font-weight: bold;
       color: #fff;
     }
 
+    /* Navigation Menu */
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
     nav a {
       color: #fff;
       text-decoration: none;
-      margin: 0 15px;
       font-size: 16px;
+      padding: 10px;
       transition: color 0.3s ease;
     }
 
@@ -51,7 +61,14 @@
       color: #ff6f61;
     }
 
-    /* Main Section */
+    /* Hamburger Menu for Mobile */
+    .menu-icon {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
     .hero {
       height: 100vh;
       display: flex;
@@ -60,16 +77,6 @@
       text-align: center;
       background: url('https://source.unsplash.com/1600x900/?meditation') no-repeat center center/cover;
       position: relative;
-    }
-
-    .hero::before {
-      /* content: ''; */
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
     }
 
     .hero h1 {
@@ -89,7 +96,6 @@
     .phases {
       padding: 50px 20px;
       background: rgba(255, 255, 255, 0.1);
-      /* backdrop-filter: blur(10px); */
       text-align: center;
     }
 
@@ -157,12 +163,75 @@
         opacity: 1;
       }
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      /* Header Adjustments */
+      header {
+        padding: 10px 20px;
+      }
+
+      .brand {
+        font-size: 20px;
+      }
+
+      /* Hide Regular Nav, Show Hamburger Icon */
+      nav {
+        display: none;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+      /* Mobile Navigation Menu */
+      nav.mobile-nav {
+        display: flex;
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.8);
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      nav.mobile-nav a {
+        margin: 5px 0;
+      }
+
+      /* Hero Section Adjustments */
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        padding: 0 10px;
+      }
+
+      /* Phase Cards Adjustments */
+      .phase-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .phase-card {
+        width: 90%;
+      }
+
+      /* Footer Adjustments */
+      footer p {
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="brand">HALO HEALTH</div>
-    <nav>
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+    <nav id="main-nav">
       <a href="#">Home</a>
       <a href="#">About</a>
       <a href="#">Services</a>
@@ -203,6 +272,12 @@
   </footer>
 
   <script>
+    // Toggle Mobile Navigation Menu
+    function toggleMenu() {
+      const nav = document.getElementById('main-nav');
+      nav.classList.toggle('mobile-nav');
+    }
+
     // Random Meditation Phrases
     const phrases = [
       "Breathe in calm, breathe out stress.",

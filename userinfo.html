@@ -20,7 +20,7 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      padding: 20px; /* Added padding to body */
+      padding: 20px;
     }
     .card {
       background: rgba(255, 255, 255, 0.1);
@@ -30,12 +30,13 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 500px;
-      margin: 20px; /* Added margin to card */
+      margin: 20px;
     }
     .card h2 {
       text-align: center;
       margin-bottom: 20px;
       font-weight: 600;
+      font-size: 24px; /* Adjusted for smaller screens */
     }
     .input-field label {
       color: #fff;
@@ -75,8 +76,8 @@
       margin-bottom: 20px;
     }
     .graphic img {
-      width: 100px;
-      height: 100px;
+      width: 80px; /* Adjusted for smaller screens */
+      height: 80px; /* Adjusted for smaller screens */
       animation: float 3s ease-in-out infinite;
     }
     @keyframes float {
@@ -92,6 +93,30 @@
     }
     .radio-group label {
       margin-right: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px; /* Reduced padding for smaller screens */
+      }
+      .card h2 {
+        font-size: 20px; /* Smaller font size for headings */
+      }
+      .graphic img {
+        width: 60px; /* Smaller logo for mobile */
+        height: 60px;
+      }
+      .btn {
+        width: 90%; /* Reduced button width for mobile */
+        margin: 20px auto; /* Centered button */
+      }
+      .input-field input, .input-field select {
+        font-size: 14px; /* Smaller font size for inputs */
+      }
+      .checkbox-label {
+        font-size: 12px; /* Smaller font size for labels */
+      }
     }
   </style>
 </head>

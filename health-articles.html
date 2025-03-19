@@ -59,10 +59,10 @@
         /* Card Container */
         .card-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* Adjusted to space buttons farther apart */
             width: 90%;
-            max-width: 1000px; /* Increased max-width to accommodate wider spacing */
+            max-width: 1000px;
             margin: 20px auto;
             position: relative;
         }
@@ -127,7 +127,7 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background 0.3s ease, transform 0.3s ease;
-            margin: 0 40px; /* Added margin to space buttons farther apart */
+            margin: 10px 0; /* Adjusted margin for smaller screens */
         }
 
         .nav-btn:hover {
@@ -136,38 +136,40 @@
         }
 
         /* Saved Cards Section */
-        .saved-cards-container {
-            display: none;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
+/* Saved Cards Container */
+.saved-cards-container {
+    display: none; /* Hidden by default */
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
-        .saved-cards-container.active {
-            display: flex;
-        }
+.saved-cards-container.active {
+    display: flex; /* Show the container when active */
+}
 
-        .saved-card {
-            width: calc(33.33% - 20px);
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+/* Saved Card Styles */
+.saved-card {
+    width: calc(33.33% - 20px); /* 3 cards per row by default */
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        .saved-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-        }
+.saved-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
 
         .remove-icon {
             position: absolute;
@@ -223,6 +225,68 @@
                 transform: translateY(0);
             }
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem; /* Smaller font size for header */
+            }
+
+            .search-bar input {
+                font-size: 14px; /* Smaller font size for search bar */
+                padding: 10px 15px; /* Adjusted padding */
+            }
+
+            .card h2 {
+                font-size: 1.5rem; /* Smaller font size for card header */
+            }
+
+            .card p {
+                font-size: 1rem; /* Smaller font size for card description */
+            }
+
+            .nav-btn {
+                width: 100%; /* Full-width buttons for mobile */
+                margin: 5px 0; /* Adjusted margin */
+            }
+
+            .saved-card {
+                width: 100%; /* Full-width saved cards for mobile */
+            }
+
+            .saved-cards-container {
+                flex-direction: column; /* Stack saved cards vertically */
+            }
+        }
+
+        /* Add this to your existing CSS */
+
+@media (max-width: 768px) {
+    /* Adjust the card margin for mobile */
+    .card {
+        margin: 10px auto; /* Center the card and add some margin */
+        width: 90%; /* Ensure the card takes up most of the screen width */
+    }
+
+    /* Adjust the saved card margin for mobile */
+    .saved-card {
+        margin: 10px auto; /* Center the saved card and add some margin */
+        width: 90%; /* Ensure the saved card takes up most of the screen width */
+    }
+
+    /* Ensure the card container is properly centered */
+    .card-container {
+        margin: 10px auto; /* Center the container and add some margin */
+        padding: 10px; /* Add some padding */
+    }
+
+    /* Ensure the saved cards container is properly centered */
+    .saved-cards-container {
+        margin: 10px auto; /* Center the container and add some margin */
+        padding: 10px; /* Add some padding */
+    }
+}
+
     </style>
 </head>
 <body>
@@ -343,40 +407,41 @@
         }
 
         // Function to render cards
-        function renderCards() {
-            const cardsContainer = document.getElementById("cards-container");
-            const savedCardsContainer = document.getElementById("saved-cards-container");
+        // Function to render cards
+function renderCards() {
+    const cardsContainer = document.getElementById("cards-container");
+    const savedCardsContainer = document.getElementById("saved-cards-container");
 
-            // Clear containers
-            cardsContainer.innerHTML = "";
-            savedCardsContainer.innerHTML = "";
+    // Clear containers
+    cardsContainer.innerHTML = "";
+    savedCardsContainer.innerHTML = "";
 
-            // Render the current card
-            const card = createCard(healthTips[currentIndex], currentIndex);
-            cardsContainer.appendChild(card);
+    // Render the current card
+    const card = createCard(healthTips[currentIndex], currentIndex);
+    cardsContainer.appendChild(card);
 
-            // Render saved cards
-            savedCards.forEach(index => {
-                const savedCard = document.createElement("div");
-                savedCard.classList.add("saved-card");
+    // Render saved cards
+    savedCards.forEach(index => {
+        const savedCard = document.createElement("div");
+        savedCard.classList.add("saved-card");
 
-                const header = document.createElement("h2");
-                header.textContent = healthTips[index].header;
+        const header = document.createElement("h2");
+        header.textContent = healthTips[index].header;
 
-                const description = document.createElement("p");
-                description.textContent = healthTips[index].description;
+        const description = document.createElement("p");
+        description.textContent = healthTips[index].description;
 
-                const removeIcon = document.createElement("i");
-                removeIcon.classList.add("fas", "fa-times", "remove-icon");
-                removeIcon.addEventListener("click", () => removeSavedCard(index));
+        const removeIcon = document.createElement("i");
+        removeIcon.classList.add("fas", "fa-times", "remove-icon");
+        removeIcon.addEventListener("click", () => removeSavedCard(index));
 
-                savedCard.appendChild(header);
-                savedCard.appendChild(description);
-                savedCard.appendChild(removeIcon);
+        savedCard.appendChild(header);
+        savedCard.appendChild(description);
+        savedCard.appendChild(removeIcon);
 
-                savedCardsContainer.appendChild(savedCard);
-            });
-        }
+        savedCardsContainer.appendChild(savedCard);
+    });
+}
 
         // Function to remove a saved card
         function removeSavedCard(index) {

@@ -38,33 +38,39 @@
       color: #ddd;
     }
 
-    /* Navigation */
-    nav {
-      display: flex;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 10px;
-      margin-bottom: 20px;
-    }
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: center; /* Center the navigation links */
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
 
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 15px;
-      font-size: 1.1rem;
-      transition: color 0.3s ease;
-    }
+.nav-links {
+  display: flex;
+  justify-content: center; /* Center the links */
+  align-items: center;
+}
 
-    nav a:hover {
-      color: #6a11cb;
-    }
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
 
-    /* Main Content */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+.nav-links a:hover {
+  color: #6a11cb;
+}
+
+.hamburger {
+  display: none; /* Hide hamburger on desktop */
+  font-size: 1.5rem;
+  cursor: pointer;
+}
 
     .hero {
       text-align: center;
@@ -75,7 +81,6 @@
       animation: fadeIn 2s ease-in-out;
       background: url('onlinepharmacybg.jpg') no-repeat center center fixed;
       background-size: cover;
-      
     }
 
     .hero h2 {
@@ -175,6 +180,121 @@
         opacity: 1;
       }
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      /* Header */
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+
+      /* Navigation */
+      .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 80px;
+    left: 0;
+    padding: 10px 0;
+  }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        margin: 10px 0;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 50px 20px;
+      }
+
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .hero button {
+        padding: 10px 20px;
+        font-size: 1rem;
+      }
+
+      /* Products Section */
+      .products {
+        grid-template-columns: 1fr; /* Stack products vertically on mobile */
+      }
+
+      .product-card {
+        padding: 15px;
+      }
+
+      .product-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .product-card p {
+        font-size: 0.9rem;
+      }
+
+      .product-card button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Header */
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      header p {
+        font-size: 0.9rem;
+      }
+
+      /* Hero Section */
+      .hero h2 {
+        font-size: 1.8rem;
+      }
+
+      .hero p {
+        font-size: 0.9rem;
+      }
+
+      .hero button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+
+      /* Product Cards */
+      .product-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .product-card p {
+        font-size: 0.8rem;
+      }
+
+      .product-card button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -184,10 +304,13 @@
   </header>
 
   <nav>
-    <a href="#home">Home</a>
-    <a href="#products">Products</a>
-    <a href="#about">About Us</a>
-    <a href="#contact">Contact</a>
+    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" onclick="closeMenu()">Home</a>
+      <a href="#products" onclick="closeMenu()">Products</a>
+      <a href="#about" onclick="closeMenu()">About Us</a>
+      <a href="#contact" onclick="closeMenu()">Contact</a>
+    </div>
   </nav>
 
   <div class="container">
@@ -244,6 +367,18 @@
 
     function addToCart(productName) {
       alert(`${productName} added to cart!`);
+    }
+
+    // Toggle Hamburger Menu
+    function toggleMenu() {
+      const navLinks = document.getElementById("navLinks");
+      navLinks.classList.toggle("active");
+    }
+
+    // Close Hamburger Menu
+    function closeMenu() {
+      const navLinks = document.getElementById("navLinks");
+      navLinks.classList.remove("active");
     }
   </script>
 </body>

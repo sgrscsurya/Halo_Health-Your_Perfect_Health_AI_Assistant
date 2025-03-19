@@ -7,138 +7,215 @@
   <title>Appointments and Consultations</title>
   <style>
     /* General Styling */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: url('appointmentsbg.jpg') no-repeat center center;
-      background-size: cover;
-    }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('appointmentsbg.jpg') no-repeat center center;
+  background-size: cover;
+}
 
-    .container {
-      width: 100%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    }
+/* Main Container */
+.container {
+  width: 90%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  margin: 30px auto; /* Adds margin to the container */
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2.5rem;
-      color: #333;
-    }
+/* Heading */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+/* Form Styling */
+.form-group {
+  margin-bottom: 15px;
+}
 
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
+.form-group label {
+  display: block;
+  font-weight: bold;
+}
 
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
+.form-group input,
+.form-group textarea {
+  width: calc(100% - 20px); /* Adjust width to account for margins */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 0 10px; /* Adds margin on left and right */
+}
 
-    .form-group textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
 
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background: #ff6f61;
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+/* Buttons */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background: #ff6f61;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-    .btn:hover {
-      background: #ff3b2f;
-    }
+.btn:hover {
+  background: #ff3b2f;
+}
 
-    .appointments-list {
-      margin-top: 20px;
-    }
+/* Appointment List */
+.appointments-list {
+  margin-top: 20px;
+}
 
-    .appointment-card {
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 0.5s ease;
-    }
+/* Appointment Cards */
+.appointment-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease;
+}
 
-    .appointment-card h3 {
-      margin: 0;
-      font-size: 1.2rem;
-      color: #333;
-    }
+.appointment-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
 
-    .appointment-card p {
-      margin: 5px 0;
-      font-size: 0.9rem;
-      color: #666;
-    }
+.appointment-card p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
 
-    .appointment-card button {
-      background: #ff6f61;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      margin-right: 5px;
-    }
+/* Buttons inside Appointment Cards */
+.appointment-card button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 0.9rem;
+  margin-right: 5px;
+}
 
-    .appointment-card button.edit {
-      background: #4caf50;
-    }
+.appointment-card button.edit {
+  background: #4caf50;
+  color: white;
+}
 
-    .appointment-card button.edit:hover {
-      background: #45a049;
-    }
+.appointment-card button.edit:hover {
+  background: #45a049;
+}
 
-    .appointment-card button.delete {
-      background: #ff4d4d;
-    }
+.appointment-card button.delete {
+  background: #ff4d4d;
+  color: white;
+}
 
-    .appointment-card button.delete:hover {
-      background: #cc0000;
-    }
+.appointment-card button.delete:hover {
+  background: #cc0000;
+}
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 20px auto;
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+    width: calc(100% - 16px);
+    margin: 0 8px;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .appointment-card {
+    padding: 12px;
+  }
+
+  .appointment-card button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+    padding: 15px;
+    margin: 15px auto;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.85rem;
+    padding: 8px;
+    width: calc(100% - 12px);
+    margin: 0 6px; 
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .appointment-card {
+    padding: 10px;
+  }
+
+  .appointment-card button {
+    padding: 5px 8px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
   </style>
 </head>
 <body>

@@ -137,6 +137,64 @@
         transform: translateY(0);
       }
     }
+
+/* Responsive Design for Small Screens */
+@media (max-width: 480px) {
+  body {
+    padding: 20px; /* Add white margins around the content */
+    background-color: white; /* Ensures the white background around the edges */
+  }
+
+  .container {
+    width: 85%; /* Slightly reduce width to create white margins */
+    padding: 25px; /* Increased padding inside the container */
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Retain gradient */
+    border-radius: 15px;
+    margin: auto; /* Center the container */
+  }
+
+  h1 {
+    font-size: 2rem; /* Reduce font size for small screens */
+  }
+
+  .form-group {
+    margin-bottom: 15px; /* Add space between form elements */
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.9rem; /* Adjust font size for better visibility */
+    padding: 12px; /* Add padding inside input fields */
+    margin-bottom: 10px; /* Add spacing below input fields */
+    border-radius: 8px; /* Smooth border edges */
+    width: calc(100% - 20px); /* Ensure inputs don't touch edges */
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 12px;
+    margin-top: 10px; /* Add margin between last input and button */
+    width: 100%; /* Ensure it stays within the container */
+    border-radius: 8px;
+  }
+
+  .reminder-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px; /* More padding for better spacing */
+  }
+
+  .reminder-card button {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+}
+
   </style>
 </head>
 <body>

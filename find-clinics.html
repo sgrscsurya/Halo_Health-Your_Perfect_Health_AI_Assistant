@@ -23,7 +23,7 @@
         #es-header {
             background: darkblue;
             color: white;
-            padding: 10px;
+            padding: 15px 10px; /* Increased padding */
             font-size: 22px;
             font-weight: bold;
             text-align: center;
@@ -32,6 +32,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
 
         .es-container {
@@ -41,8 +42,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 60px;
+            padding-top: 80px; /* Increased padding to account for header */
             padding-bottom: 20px;
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
 
         /* Search Bar */
@@ -55,12 +57,13 @@
 
         #search-bar {
             width: 100%;
-            padding: 10px 40px 10px 10px;
+            padding: 10px 40px 10px 10px; /* Adjusted padding */
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 16px;
             background: rgba(255, 255, 255, 0.9);
             color: #333;
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
 
         .search-icon {
@@ -112,14 +115,14 @@
         }
 
         .leaflet-popup-content-wrapper {
-            background: white; /* Ensure the background is white for contrast */
+            background: white;
         }
 
         .leaflet-popup-content {
-            font-size: 14px; /* Adjust font size if needed */
-            line-height: 1.5; /* Adjust line height for better readability */
-            max-height: 300px; /* Increased max height for longer directions */
-            overflow-y: auto; /* Enable vertical scrolling */
+            font-size: 14px;
+            line-height: 1.5;
+            max-height: 300px;
+            overflow-y: auto;
         }
 
         /* Routing Instructions Style */
@@ -138,14 +141,55 @@
 
         .leaflet-routing-container .leaflet-routing-instructions-container {
             color: black !important;
-            max-height: 200px; /* Increased max height for longer directions */
-            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 200px;
+            overflow-y: auto;
         }
 
         /* Home Icon for User Location Marker */
         .home-icon {
             font-size: 24px;
             color: red;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #es-header {
+                font-size: 18px; /* Smaller font size for header */
+                padding: 10px; /* Reduced padding */
+            }
+
+            .es-container {
+                padding-top: 70px; /* Adjusted padding for smaller header */
+            }
+
+            .search-container {
+                width: 95%; /* Wider search bar for mobile */
+            }
+
+            #search-bar {
+                font-size: 14px; /* Smaller font size for search bar */
+                padding: 8px 35px 8px 8px; /* Adjusted padding */
+            }
+
+            .search-icon {
+                right: 8px; /* Adjusted position */
+                font-size: 16px; /* Smaller icon */
+            }
+
+            .buttons-container {
+                flex-direction: column; /* Stack buttons vertically */
+                gap: 8px; /* Reduced gap between buttons */
+            }
+
+            .buttons-container button {
+                width: 100%; /* Full-width buttons */
+                font-size: 12px; /* Smaller font size for buttons */
+                padding: 8px 16px; /* Reduced padding */
+            }
+
+            #map {
+                height: 300px; /* Reduced map height for mobile */
+            }
         }
     </style>
 </head>
@@ -197,7 +241,7 @@
                 const homeIcon = L.divIcon({
                     className: 'home-icon',
                     html: '<i class="fas fa-home"></i>',
-                    iconSize: [24, 24], // Adjust size as needed
+                    iconSize: [24, 24],
                 });
 
                 userMarker = L.marker(userLocation, { icon: homeIcon }).addTo(map)
@@ -229,7 +273,7 @@
                 .then(data => {
                     if (data.length > 0) {
                         const location = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-                        map.setView(location, 14); // Zoom in on the searched location
+                        map.setView(location, 14);
 
                         // Clear existing markers except user's location
                         map.eachLayer(layer => {
@@ -243,7 +287,7 @@
                         const marker = L.marker(location).addTo(map)
                             .bindPopup(`<b>${data[0].display_name}</b><br>Distance: ${distance} km`)
                             .on('click', () => {
-                                clearMap(); // Clear existing popups and routing controls
+                                clearMap();
                                 currentPopup = marker.getPopup();
                                 routingControl = L.Routing.control({
                                     waypoints: [
@@ -263,27 +307,25 @@
 
         // Function to find nearby places using Overpass API
         function findNearbyPlaces(amenity) {
-            clearMap(); // Clear existing popups and routing controls before adding new markers
+            clearMap();
 
             if (!userLocation) {
                 alert('Please allow access to your location.');
                 return;
             }
 
-            const radius = 5000; // Search within 5km
+            const radius = 5000;
             const overpassUrl = `https://overpass-api.de/api/interpreter?data=[out:json];node[amenity=${amenity}](around:${radius},${userLocation[0]},${userLocation[1]});out;`;
 
             fetch(overpassUrl)
                 .then(response => response.json())
                 .then(data => {
-                    // Clear existing markers except user's location
                     map.eachLayer(layer => {
                         if (layer instanceof L.Marker && layer !== userMarker) {
                             map.removeLayer(layer);
                         }
                     });
 
-                    // Add markers for nearby places
                     data.elements.forEach(place => {
                         const placeLocation = [place.lat, place.lon];
                         const distance = calculateDistance(userLocation[0], userLocation[1], place.lat, place.lon).toFixed(2);
@@ -291,7 +333,7 @@
                         const marker = L.marker(placeLocation).addTo(map)
                             .bindPopup(`<b>${place.tags.name || 'Unnamed Place'}</b><br>${place.tags.amenity}<br>Distance: ${distance} km`)
                             .on('click', () => {
-                                clearMap(); // Clear existing popups and routing controls
+                                clearMap();
                                 currentPopup = marker.getPopup();
                                 routingControl = L.Routing.control({
                                     waypoints: [
@@ -308,7 +350,7 @@
 
         // Function to calculate distance between two coordinates using Haversine formula
         function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Radius of the Earth in km
+            const R = 6371;
             const dLat = (lat2 - lat1) * (Math.PI / 180);
             const dLon = (lon2 - lon1) * (Math.PI / 180);
             const a =
@@ -316,7 +358,7 @@
                 Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return R * c; // Distance in km
+            return R * c;
         }
 
         // Function to handle Enter key press in the search bar

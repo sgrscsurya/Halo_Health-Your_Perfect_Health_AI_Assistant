@@ -17,7 +17,7 @@
             color: white;
             overflow-y: auto;
             background: url('emergencybg.jpg') no-repeat center center fixed;
-    background-size: cover;
+            background-size: cover;
         }
 
         #es-header {
@@ -32,6 +32,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
 
         .es-container {
@@ -43,6 +44,7 @@
             justify-content: flex-start;
             padding-top: 60px;
             padding-bottom: 20px;
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
 
         .sos-button, .add-button, .submit-button {
@@ -57,6 +59,8 @@
             transition: all 0.3s ease;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
             margin: 10px;
+            width: 90%; /* Full-width buttons for mobile */
+            max-width: 400px; /* Limit button width on larger screens */
         }
 
         .sos-button:hover, .add-button:hover, .submit-button:hover {
@@ -67,7 +71,7 @@
         .contact-form {
             display: none;
             background: rgba(255, 255, 255, 0.1);
-            padding: 50px;
+            padding: 20px;
             border-radius: 12px;
             width: 90%;
             max-width: 400px;
@@ -83,12 +87,14 @@
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 14px;
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
 
         .contact-list {
             width: 90%;
             max-width: 400px;
             margin: 10px 0;
+            text-align: center;
         }
 
         .contact-item {
@@ -135,6 +141,40 @@
 
         .contact-item .delete-button:hover {
             background: #ff4d4d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #es-header {
+                font-size: 18px; /* Smaller font size for header */
+                padding: 8px; /* Reduced padding */
+            }
+
+            .es-container {
+                padding-top: 50px; /* Adjusted padding for smaller header */
+            }
+
+            .sos-button, .add-button, .submit-button {
+                font-size: 16px; /* Smaller font size for buttons */
+                padding: 10px 20px; /* Adjusted padding */
+            }
+
+            .contact-form {
+                padding: 15px; /* Reduced padding for form */
+            }
+
+            .contact-form input {
+                font-size: 12px; /* Smaller font size for inputs */
+            }
+
+            .contact-item {
+                padding: 10px; /* Reduced padding for contact items */
+            }
+
+            .contact-item button {
+                font-size: 12px; /* Smaller font size for buttons */
+                padding: 6px 12px; /* Adjusted padding */
+            }
         }
     </style>
 </head>
