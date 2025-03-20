@@ -128,7 +128,7 @@
     <h2>Welcome to HALO HEALTH</h2>
     <form id="userForm">
       <div class="input-field">
-        <input id="userName" type="text" class="validate" required>
+        <input id="userName" type="text" class="validate" required readonly>
         <label for="userName">User Name</label>
       </div>
       <div class="input-field">
@@ -153,7 +153,7 @@
         <input type="file" id="healthReport">
       </div>
       <div class="input-field">
-        <input id="email" type="email" class="validate" required>
+        <input id="email" type="email" class="validate" required readonly>
         <label for="email">Email</label>
       </div>
       <div class="input-field">
@@ -194,17 +194,24 @@
       var elems = document.querySelectorAll('select');
       M.FormSelect.init(elems);
 
-      // Form submission
-      document.getElementById('userForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        // Validate form
-        if (document.getElementById('terms').checked) {
-          // Redirect to main-menu.html
-          window.location.href = 'main-menu.html';
-        } else {
-          alert('Please agree to the Terms and Conditions.');
-        }
-      });
+      // Get URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const username = urlParams.get('username');
+      const email = urlParams.get('email');
+
+      // Set the username and email fields
+      document.getElementById('userName').value = username;
+      document.getElementById('email').value = email;
+
+      // Re-initialize the input fields to reflect the new values
+      M.updateTextFields();
+    });
+
+    // Handle form submission
+    document.getElementById('userForm').addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent default form submission
+      // Redirect to main-menu.html
+      window.location.href = 'main-menu.html';
     });
   </script>
 </body>
